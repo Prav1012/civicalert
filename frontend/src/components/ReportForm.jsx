@@ -3,7 +3,7 @@ import { supabase } from '../supabase'
 import { useLocation } from '../hooks/useLocation'
 import { useOfflineQueue } from '../hooks/useOfflineQueue'
 import emailjs from '@emailjs/browser'
-console.log('SUPABASE VERSION LOADED', typeof supabase)
+console.log('supabase VERSION LOADED', typeof supabase)
 
 const EMAILJS_SERVICE_ID  = 'service_xxxxxxx'
 const EMAILJS_TEMPLATE_ID = 'template_xxxxxxx'
@@ -204,7 +204,8 @@ export default function ReportForm() {
       </div>
       <textarea value={description} onChange={e => setDesc(e.target.value)}
         placeholder="Describe the issue..." rows={3}
-        style={{ ...field, resize:'none', marginBottom:'20px' }} />
+        style={{ ...field, resize:'none', marginBottom:'20px' }}
+      ></textarea>
 
       <div style={{ marginBottom:'8px', fontSize:'10px', color:'rgba(0,255,180,0.5)', letterSpacing:'3px' }}>
         📷 ATTACH PHOTO
@@ -215,9 +216,11 @@ export default function ReportForm() {
         cursor:'pointer', marginBottom:'20px',
         color:'rgba(0,255,180,0.5)', fontSize:'12px', letterSpacing:'1px'
       }}>
-        {preview
-          ? <img src={preview} alt="preview" style={{ width:'100%', maxHeight:'160px', objectFit:'cover', borderRadius:'4px' }} />
-          : '📎 TAP TO UPLOAD IMAGE'}
+        {preview ? (
+          <img src={preview} alt="preview" style={{ width:'100%', maxHeight:'160px', objectFit:'cover', borderRadius:'4px' }} />
+        ) : (
+          <span>📎 TAP TO UPLOAD IMAGE</span>
+        )}
         <input type="file" accept="image/*" capture="environment"
           onChange={handlePhoto} style={{ display:'none' }} />
       </label>
