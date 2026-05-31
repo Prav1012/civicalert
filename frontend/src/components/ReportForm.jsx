@@ -3,6 +3,7 @@ import { supabase } from '../supabase'
 import { useLocation } from '../hooks/useLocation'
 import { useOfflineQueue } from '../hooks/useOfflineQueue'
 import emailjs from '@emailjs/browser'
+console.log('SUPABASE VERSION LOADED', typeof supabase)
 
 const EMAILJS_SERVICE_ID  = 'service_xxxxxxx'
 const EMAILJS_TEMPLATE_ID = 'template_xxxxxxx'
