@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import axios from 'axios'
+import { supabase } from '../supabase'
 
 const QUEUE_KEY = 'civic_offline_queue'
 
@@ -11,8 +11,17 @@ export function useOfflineQueue() {
     if (!queue.length) return
     for (const report of queue) {
       try {
-        await axios.post('http://127.0.0.1:8000/reports/submit', report)
-      } catch  { return }
+        await supabase.from('reports').insert([{
+          anonymous_id:       'anon_' + Math.random().toString(36).slice(2),
+          category:           report.category,
+          severity:           report.severity,
+          description:        report.description,
+          latitude:           report.latitude,
+          longitude:          report.longitude,
+          blockchain_tx_hash: '0xoffline_' + Date.now(),
+          status:             'pending'
+        }])
+      } catch { return }
     }
     localStorage.removeItem(QUEUE_KEY)
   }, [])
